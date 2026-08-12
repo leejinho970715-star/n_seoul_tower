@@ -52,14 +52,21 @@ function initHistoryBearJourney() {
   var reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
   var frameId = null;
   var bearProgress = 0;
+  var bearStops = [];
+  var timelineStart = 0;
+  var timelineHeight = 0;
+  var lastFrameTime = null;
+  var FOLLOW_STRENGTH = 1.5;
 
   if (!timeline || !bear || cards.length === 0 || reducedMotionQuery.matches) {
     return;
   }
 
-  function getBearStops() {
+  function updateBearStops() {
     var timelineRect = timeline.getBoundingClientRect();
-    return cards.map(function getCardRightEdge(card) {
+    timelineStart = window.scrollY + timelineRect.top;
+    timelineHeight = timelineRect.height;
+    bearStops = cards.map(function getCardRightEdge(card) {
       var cardRect = card.getBoundingClientRect();
       return {
         x: cardRect.right - timelineRect.left - bear.offsetWidth * 0.3,
@@ -68,22 +75,22 @@ function initHistoryBearJourney() {
     });
   }
 
-  function renderBearPosition() {
+  function renderBearPosition(frameTime) {
     frameId = null;
-    var timelineRect = timeline.getBoundingClientRect();
-    var stops = getBearStops();
-    var start = window.scrollY + timelineRect.top - window.innerHeight * 0.58;
-    var distance = Math.max(1, timelineRect.height + window.innerHeight * 0.16);
+    var elapsed = lastFrameTime === null ? 16 : Math.min(64, frameTime - lastFrameTime);
+    var easing = 1 - Math.exp(-FOLLOW_STRENGTH * elapsed / 1000);
+    var start = timelineStart - window.innerHeight * 0.58;
+    var distance = Math.max(1, timelineHeight + window.innerHeight * 0.16);
     var targetProgress = Math.min(1, Math.max(0, (window.scrollY - start) / distance));
-    bearProgress += (targetProgress - bearProgress) * 0.1;
+    bearProgress += (targetProgress - bearProgress) * easing;
     if (Math.abs(targetProgress - bearProgress) < 0.001) {
       bearProgress = targetProgress;
     }
-    var scaledProgress = bearProgress * (stops.length - 1);
-    var stopIndex = Math.min(stops.length - 2, Math.floor(scaledProgress));
+    var scaledProgress = bearProgress * (bearStops.length - 1);
+    var stopIndex = Math.min(bearStops.length - 2, Math.floor(scaledProgress));
     var localProgress = scaledProgress - stopIndex;
-    var from = stops[stopIndex];
-    var to = stops[stopIndex + 1] || from;
+    var from = bearStops[stopIndex];
+    var to = bearStops[stopIndex + 1] || from;
     var x = from.x + (to.x - from.x) * localProgress;
     var y = from.y + (to.y - from.y) * localProgress;
     var direction = to.x >= from.x ? 1 : -1;
@@ -91,6 +98,7 @@ function initHistoryBearJourney() {
     bear.style.left = x.toFixed(2) + "px";
     bear.style.top = y.toFixed(2) + "px";
     bear.style.transform = "translate(-50%, -50%) scaleX(" + direction + ")";
+    lastFrameTime = frameTime;
 
     if (bearProgress !== targetProgress) {
       frameId = window.requestAnimationFrame(renderBearPosition);
@@ -106,8 +114,15 @@ function initHistoryBearJourney() {
   }
 
   window.addEventListener("scroll", requestBearRender, { passive: true });
-  window.addEventListener("resize", requestBearRender);
-  window.addEventListener("load", requestBearRender, { once: true });
+  window.addEventListener("resize", function updateBearLayout() {
+    updateBearStops();
+    requestBearRender();
+  });
+  window.addEventListener("load", function updateBearLayout() {
+    updateBearStops();
+    requestBearRender();
+  }, { once: true });
+  updateBearStops();
   requestBearRender();
 }
 
