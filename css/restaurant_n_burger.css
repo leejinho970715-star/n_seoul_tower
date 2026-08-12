@@ -192,6 +192,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
+  pointer-events: auto;
   min-width: 240px;
   min-height: 52px;
   margin-top: 32px;
@@ -766,6 +768,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
+  pointer-events: auto;
   min-height: 52px;
   padding: 4px 24px;
   border-radius: 30px;
