@@ -430,7 +430,7 @@ function initAboutPanels() {
 
 /* --------------------------------------------------------------------------
    tower data — 타워 실루엣 영상 (1095:14757)
-   장식 영상이라 소리 없이 반복 재생하고, 모션 최소화 설정에서는 첫 프레임에 멈춥니다.
+   장식 영상이라 소리 없이 반복 재생하고, 모션 최소화 설정에서는 정지 화면으로 둡니다.
    -------------------------------------------------------------------------- */
 function initTowerVideo() {
   var video = document.querySelector("[data-tower-video]");
@@ -439,45 +439,27 @@ function initTowerVideo() {
     return;
   }
 
-  var REVERSE_END_TIME = 3;
-  var REVERSE_PLAYBACK_RATE = 0.7;
-  var REVERSE_FRAME_INTERVAL = 1000 / 30;
-  var reverseEndTime = REVERSE_END_TIME;
-  var reversePlayhead = reverseEndTime;
-  var lastFrameTime = 0;
-
-  function renderTowerVideoReverse(timestamp) {
-    if (!lastFrameTime) {
-      lastFrameTime = timestamp;
-    }
-
-    var elapsed = timestamp - lastFrameTime;
-
-    if (elapsed >= REVERSE_FRAME_INTERVAL) {
-      reversePlayhead -= (elapsed / 1000) * REVERSE_PLAYBACK_RATE;
-
-      if (reversePlayhead <= 0) {
-        reversePlayhead = reverseEndTime;
-      }
-
-      video.currentTime = reversePlayhead;
-      lastFrameTime = timestamp;
-    }
-
-    window.requestAnimationFrame(renderTowerVideoReverse);
-  }
-
   function handleTowerVideoReady() {
-    video.pause();
-    reverseEndTime = Math.min(REVERSE_END_TIME, video.duration || REVERSE_END_TIME);
-    reversePlayhead = reverseEndTime;
-    video.currentTime = reversePlayhead;
-
     if (prefersReducedMotion()) {
+      video.pause();
+      video.currentTime = Math.min(3, video.duration || 3);
       return;
     }
 
-    window.requestAnimationFrame(renderTowerVideoReverse);
+    /* 프레임마다 currentTime 을 강제로 바꾸면 일부 브라우저에서 디코딩된 프레임이
+       그려지지 않아 타워가 빈 영역으로 남습니다. 네이티브 재생을 사용해 안정적으로
+       첫 프레임을 표시하고, 자동 재생 제한을 피하도록 무음 속성을 명시합니다. */
+    video.muted = true;
+    video.loop = true;
+    video.playbackRate = 0.7;
+
+    var playPromise = video.play();
+
+    if (playPromise && typeof playPromise.catch === "function") {
+      playPromise.catch(function () {
+        video.currentTime = Math.min(3, video.duration || 3);
+      });
+    }
   }
 
   if (video.readyState >= 1) {
