@@ -37,7 +37,7 @@
         link.href = supportPath + "FAQ.html";
       }
       if (label === "contact us") {
-        link.href = supportPath + "FAQ.html#contact_support";
+        link.href = supportPath + "FAQ.html";
       }
     });
   }
