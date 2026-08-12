@@ -18,12 +18,12 @@
 .identity_settings{border-top:1px solid #d9dfbd}
 .type_display{font-family:var(--font_title);font-size:clamp(54px,5vw,96px);font-weight:600}.type_pretendard{font-family:var(--font_body)}
 .type_samples{display:grid;gap:14px;margin-top:36px;font-size:clamp(18px,1.4vw,27px)}.type_samples>*{display:block}
-.identity_colors{margin-top:90px}.identity_primary_colors{display:flex;flex-wrap:wrap;gap:12px}.identity_primary_colors span{min-width:190px;padding:24px;border-radius:18px;background:var(--swatch);color:#fff;line-height:1.5}
+.identity_colors{margin-top:90px}.identity_primary_colors{display:flex;flex-wrap:wrap;gap:12px}.identity_primary_colors span{min-width:190px;padding:24px;border-radius:18px;background:var(--swatch);color:#fff;font-weight:400;line-height:1.5}
 .identity_color_scale{height:80px;margin-top:30px;border-radius:20px;background:linear-gradient(90deg,#fff,#fff1ca,#ffcf50,#f8ac22,#7e8968,#1b5c4e,#14160e)}
 .identity_character{padding-bottom:clamp(120px,14vw,260px)}
 .character_board{margin-top:50px;padding:clamp(24px,4vw,70px);border-radius:20px;background:var(--bi-card);text-align:center}
 .character_turn,.character_app_grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;align-items:end}
-.character_turn img,.character_app_grid img{width:100%;height:clamp(220px,25vw,420px);object-fit:contain}
+.character_turn img,.character_app_grid img{width:100%;height:clamp(220px,25vw,420px);border-radius:10px;object-fit:contain}
 .character_board h3{margin-top:24px;color:#b1b1b1;font-family:var(--font_title);font-size:clamp(20px,1.67vw,32px)}
 @media(min-width:834px){.identity_logo_grid,.identity_type_grid{grid-template-columns:repeat(2,minmax(0,1fr))}.identity_logo_grid>:first-child,.identity_type_grid>:first-child{padding-right:clamp(30px,5vw,90px);border-right:1px solid #cad29f}}
 @media(max-width:833px){.identity_section{width:auto;margin:0 20px}.character_turn,.character_app_grid{grid-template-columns:1fr}.character_turn img,.character_app_grid img{height:260px}.identity_color_scale{height:180px;background:linear-gradient(#fff,#fff1ca,#ffcf50,#f8ac22,#7e8968,#1b5c4e,#14160e)}}

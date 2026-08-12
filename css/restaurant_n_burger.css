@@ -263,7 +263,7 @@
 
 .venue_guide_grid {
   display: grid;
-  align-items: start;
+  align-items: stretch;
   gap: 16px;
   margin-top: 20px;
 }
@@ -275,6 +275,10 @@
   padding: 20px;
   border-radius: 10px;
   background: var(--color_rest_box_bg);
+}
+
+.venue_guide_card:not(:has(img)) {
+  align-content: center;
 }
 
 .venue_guide_intro {
