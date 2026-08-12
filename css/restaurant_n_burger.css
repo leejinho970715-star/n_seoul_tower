@@ -189,6 +189,9 @@
 }
 
 .venue_reserve_button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   min-width: 240px;
   min-height: 52px;
   margin-top: 32px;
@@ -197,11 +200,16 @@
   background: var(--color_rest_cta);
   color: var(--color_text_white);
   font-size: 16px;
+  text-decoration: none;
 }
 
-.venue_reserve_button:disabled {
-  cursor: not-allowed;
-  opacity: 0.75;
+.venue_reserve_button:hover {
+  background: #353a1f;
+}
+
+.venue_reserve_button:focus-visible {
+  outline: 3px solid var(--color_point_500, #f8ac22);
+  outline-offset: 3px;
 }
 
 .venue_gallery {
