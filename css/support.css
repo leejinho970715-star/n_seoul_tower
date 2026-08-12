@@ -100,4 +100,22 @@
   .faq_answer { padding: 0 12px 26px; }
 }
 
+@media (max-width: 833px) {
+  .support_tabs {
+    position: fixed;
+    top: auto;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 110;
+    min-height: calc(var(--subpage_tabs_height) + env(safe-area-inset-bottom));
+    padding-bottom: env(safe-area-inset-bottom);
+    box-shadow: 0 -8px 20px rgba(59, 67, 43, 0.12);
+  }
+
+  .support_page > .support_content {
+    padding-bottom: calc(clamp(96px, 18vw, 140px) + env(safe-area-inset-bottom));
+  }
+}
+
 @media (prefers-reduced-motion: reduce) { .support_page *, .support_page *::before, .support_page *::after { transition: none !important; } }

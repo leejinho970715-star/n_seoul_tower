@@ -48,6 +48,8 @@ function initBrandPageMotion() {
 function initHistoryBearJourney() {
   var timeline = document.querySelector(".history_timeline");
   var bear = document.querySelector("[data-history-bear]");
+  var historyPath = document.querySelector("[data-history-path]");
+  var historyPathLine = document.querySelector("[data-history-path-line]");
   var cards = timeline ? Array.prototype.slice.call(timeline.querySelectorAll(".history_cards article")) : [];
   var reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
   var frameId = null;
@@ -56,10 +58,11 @@ function initHistoryBearJourney() {
   var timelineStart = 0;
   var timelineHeight = 0;
   var lastFrameTime = null;
+  var historyPathLength = 0;
   /* Lenis처럼 현재 스크롤 위치를 길게 따라가는 지연 효과입니다. */
   var FOLLOW_STRENGTH = 0.55;
 
-  if (!timeline || !bear || cards.length === 0 || reducedMotionQuery.matches) {
+  if (!timeline || !bear || !historyPath || !historyPathLine || cards.length === 0 || reducedMotionQuery.matches) {
     return;
   }
 
@@ -74,6 +77,36 @@ function initHistoryBearJourney() {
         y: cardRect.top - timelineRect.top + cardRect.height / 2
       };
     });
+    renderHistoryPath(timelineRect.width, timelineRect.height);
+  }
+
+  function renderHistoryPath(width, height) {
+    var pathCommands = [];
+
+    bearStops.forEach(function addPathPoint(stop, index) {
+      if (index === 0) {
+        pathCommands.push("M " + stop.x.toFixed(2) + " " + stop.y.toFixed(2));
+        return;
+      }
+
+      var previousStop = bearStops[index - 1];
+      var verticalDistance = stop.y - previousStop.y;
+      var curveOffset = Math.min(76, Math.abs(verticalDistance) * 0.38);
+      var curveDirection = index % 2 === 0 ? 1 : -1;
+      var controlOneX = previousStop.x + curveOffset * curveDirection;
+      var controlTwoX = stop.x - curveOffset * curveDirection;
+      pathCommands.push(
+        "C " + controlOneX.toFixed(2) + " " + (previousStop.y + verticalDistance * 0.36).toFixed(2) +
+        " " + controlTwoX.toFixed(2) + " " + (stop.y - verticalDistance * 0.36).toFixed(2) +
+        " " + stop.x.toFixed(2) + " " + stop.y.toFixed(2)
+      );
+    });
+
+    historyPath.setAttribute("viewBox", "0 0 " + Math.max(1, width).toFixed(2) + " " + Math.max(1, height).toFixed(2));
+    historyPathLine.setAttribute("d", pathCommands.join(" "));
+    historyPathLength = historyPathLine.getTotalLength();
+    historyPathLine.style.strokeDasharray = historyPathLength.toFixed(2);
+    historyPathLine.style.strokeDashoffset = historyPathLength.toFixed(2);
   }
 
   function renderBearPosition(frameTime) {
@@ -83,6 +116,7 @@ function initHistoryBearJourney() {
     var start = timelineStart - window.innerHeight * 0.58;
     var distance = Math.max(1, timelineHeight + window.innerHeight * 0.16);
     var targetProgress = Math.min(1, Math.max(0, (window.scrollY - start) / distance));
+    historyPathLine.style.strokeDashoffset = (historyPathLength * (1 - targetProgress)).toFixed(2);
     bearProgress += (targetProgress - bearProgress) * easing;
     if (Math.abs(targetProgress - bearProgress) < 0.001) {
       bearProgress = targetProgress;
