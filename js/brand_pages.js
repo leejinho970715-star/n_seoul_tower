@@ -51,6 +51,7 @@ function initHistoryBearJourney() {
   var cards = timeline ? Array.prototype.slice.call(timeline.querySelectorAll(".history_cards article")) : [];
   var reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
   var frameId = null;
+  var bearProgress = 0;
 
   if (!timeline || !bear || cards.length === 0 || reducedMotionQuery.matches) {
     return;
@@ -58,10 +59,10 @@ function initHistoryBearJourney() {
 
   function getBearStops() {
     var timelineRect = timeline.getBoundingClientRect();
-    return cards.map(function getCardCenter(card) {
+    return cards.map(function getCardRightEdge(card) {
       var cardRect = card.getBoundingClientRect();
       return {
-        x: cardRect.left - timelineRect.left + cardRect.width / 2,
+        x: cardRect.right - timelineRect.left - bear.offsetWidth * 0.3,
         y: cardRect.top - timelineRect.top + cardRect.height / 2
       };
     });
@@ -73,8 +74,12 @@ function initHistoryBearJourney() {
     var stops = getBearStops();
     var start = window.scrollY + timelineRect.top - window.innerHeight * 0.58;
     var distance = Math.max(1, timelineRect.height + window.innerHeight * 0.16);
-    var progress = Math.min(1, Math.max(0, (window.scrollY - start) / distance));
-    var scaledProgress = progress * (stops.length - 1);
+    var targetProgress = Math.min(1, Math.max(0, (window.scrollY - start) / distance));
+    bearProgress += (targetProgress - bearProgress) * 0.1;
+    if (Math.abs(targetProgress - bearProgress) < 0.001) {
+      bearProgress = targetProgress;
+    }
+    var scaledProgress = bearProgress * (stops.length - 1);
     var stopIndex = Math.min(stops.length - 2, Math.floor(scaledProgress));
     var localProgress = scaledProgress - stopIndex;
     var from = stops[stopIndex];
@@ -86,6 +91,10 @@ function initHistoryBearJourney() {
     bear.style.left = x.toFixed(2) + "px";
     bear.style.top = y.toFixed(2) + "px";
     bear.style.transform = "translate(-50%, -50%) scaleX(" + direction + ")";
+
+    if (bearProgress !== targetProgress) {
+      frameId = window.requestAnimationFrame(renderBearPosition);
+    }
   }
 
   function requestBearRender() {
