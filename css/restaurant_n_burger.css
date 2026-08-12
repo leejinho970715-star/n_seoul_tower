@@ -141,11 +141,15 @@
 }
 
 .venue_intro_body > h2 {
-  margin-top: 24px;
+  margin-top: 0;
   font-family: var(--font_title);
   font-size: clamp(30px, 8vw, 48px);
   font-weight: 700;
   line-height: 1.2;
+}
+
+.venue_intro_body > h2 + .venue_meta {
+  margin-top: 12px;
 }
 
 .venue_description {
@@ -259,12 +263,14 @@
 
 .venue_guide_grid {
   display: grid;
+  align-items: start;
   gap: 16px;
   margin-top: 20px;
 }
 
 .venue_guide_card {
   display: grid;
+  align-content: start;
   gap: 20px;
   padding: 20px;
   border-radius: 10px;
@@ -295,9 +301,12 @@
 }
 
 .venue_guide_card img {
-  width: 100%;
+  display: block;
+  justify-self: center;
+  width: min(100%, 765px);
+  max-width: 100%;
   height: auto;
-  max-height: none;
+  max-height: clamp(140px, 16vw, 220px);
   border-radius: 10px;
   object-fit: contain;
 }
@@ -524,10 +533,6 @@
     grid-template-columns: minmax(0, 637fr) minmax(0, 899fr);
     gap: 64px;
     align-items: start;
-  }
-
-  .venue_intro_body > h2 {
-    margin-top: 24px;
   }
 
   .venue_info_grid {
