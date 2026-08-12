@@ -56,7 +56,8 @@ function initHistoryBearJourney() {
   var timelineStart = 0;
   var timelineHeight = 0;
   var lastFrameTime = null;
-  var FOLLOW_STRENGTH = 1.5;
+  /* Lenis처럼 현재 스크롤 위치를 길게 따라가는 지연 효과입니다. */
+  var FOLLOW_STRENGTH = 0.55;
 
   if (!timeline || !bear || cards.length === 0 || reducedMotionQuery.matches) {
     return;
