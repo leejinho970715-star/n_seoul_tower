@@ -1,10 +1,6 @@
 @charset "utf-8";
 :root{--bi-bg:#f7f4e8;--bi-ink:#3b432b;--bi-muted:#b7bea9;--bi-green:#7e8968;--bi-card:#fffdf4}
 .identity_page{overflow:hidden;background:var(--bi-bg);color:var(--bi-ink)}
-.identity_hero{display:grid;place-items:center;min-height:clamp(520px,56.25vw,1080px);padding:100px 20px 48px;background:#b6c384;text-align:center}
-.identity_hero picture{grid-area:1/1;display:block;width:min(72vw,1244px)}
-.identity_hero img{width:100%;height:min(46vw,626px);object-fit:contain}
-.identity_hero h1{grid-area:2/1;color:#fff;font-family:var(--font_title);font-size:clamp(48px,6.25vw,120px);font-weight:600;line-height:1}
 .brand_tabs{position:sticky;top:0;z-index:20}
 .identity_section{width:min(83.34%,1600px);margin-inline:auto;padding-block:clamp(88px,10vw,190px)}
 .identity_heading{margin-bottom:clamp(48px,6vw,96px)}
@@ -30,5 +26,5 @@
 .character_turn img,.character_app_grid img{width:100%;height:clamp(220px,25vw,420px);object-fit:contain}
 .character_board h3{margin-top:24px;color:#b1b1b1;font-family:var(--font_title);font-size:clamp(20px,1.67vw,32px)}
 @media(min-width:834px){.identity_logo_grid,.identity_type_grid{grid-template-columns:repeat(2,minmax(0,1fr))}.identity_logo_grid>:first-child,.identity_type_grid>:first-child{padding-right:clamp(30px,5vw,90px);border-right:1px solid #cad29f}}
-@media(max-width:833px){.identity_hero picture{width:100%}.identity_hero img{height:360px}.identity_section{width:auto;margin:0 20px}.character_turn,.character_app_grid{grid-template-columns:1fr}.character_turn img,.character_app_grid img{height:260px}.identity_color_scale{height:180px;background:linear-gradient(#fff,#fff1ca,#ffcf50,#f8ac22,#7e8968,#1b5c4e,#14160e)}}
+@media(max-width:833px){.identity_section{width:auto;margin:0 20px}.character_turn,.character_app_grid{grid-template-columns:1fr}.character_turn img,.character_app_grid img{height:260px}.identity_color_scale{height:180px;background:linear-gradient(#fff,#fff1ca,#ffcf50,#f8ac22,#7e8968,#1b5c4e,#14160e)}}
 @media(prefers-reduced-motion:reduce){.identity_page *{animation:none!important;transition:none!important}}

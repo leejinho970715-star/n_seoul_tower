@@ -153,8 +153,7 @@ function getSubHeaderMarkup() {
               <a class="site_gnb_title" href="./brand_story.html">tower story</a>
               <ul class="site_gnb_lnb">
                 <li><a class="site_gnb_link" href="./brand_story.html">brand story</a></li>
-                <li><button class="site_gnb_link" type="button" data-pending-link aria-disabled="true">history</button>
-                </li>
+                <li><a class="site_gnb_link" href="./history.html">history</a></li>
               </ul>
             </li>
             <li class="site_gnb_group">
@@ -234,7 +233,7 @@ function getSubHeaderMarkup() {
               </button>
               <ul class="mobile_menu_submenu" id="mobile_menu_tower_story" hidden>
                 <li><a class="mobile_menu_sublink" href="./brand_story.html">brand story</a></li>
-                <li><button class="mobile_menu_sublink" type="button" disabled>history</button></li>
+                <li><a class="mobile_menu_sublink" href="./history.html">history</a></li>
               </ul>
             </li>
             <li class="mobile_menu_item">
@@ -316,7 +315,7 @@ function getSubHeaderMarkup() {
             <p class="gnb_title">tower story</p>
             <ul class="gnb_lnb">
               <li><a class="gnb_link" href="./brand_story.html">brand story</a></li>
-              <li><button class="gnb_link" type="button" data-pending-link aria-disabled="true">history</button></li>
+              <li><a class="gnb_link" href="./history.html">history</a></li>
             </ul>
           </div>
           <div class="gnb_group">
