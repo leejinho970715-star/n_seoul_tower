@@ -70,10 +70,11 @@ function initHistoryBearJourney() {
     var timelineRect = timeline.getBoundingClientRect();
     timelineStart = window.scrollY + timelineRect.top;
     timelineHeight = timelineRect.height;
-    bearStops = cards.map(function getCardRightEdge(card) {
+    bearStops = cards.map(function getCardEntryPoint(card) {
       var cardRect = card.getBoundingClientRect();
+      var cardEntryInset = Math.min(48, Math.max(24, cardRect.width * 0.12));
       return {
-        x: cardRect.right - timelineRect.left - bear.offsetWidth * 0.3,
+        x: cardRect.right - timelineRect.left - cardEntryInset,
         y: cardRect.top - timelineRect.top + cardRect.height / 2
       };
     });
