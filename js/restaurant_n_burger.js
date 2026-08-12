@@ -1,11 +1,236 @@
 "use strict";
 
+var RESTAURANT_VENUES = {
+  n_grill: {
+    tabIndex: 1,
+    floor: "T7 Floor",
+    hours: "10:00 ~ 23:00",
+    title: "n.Grill",
+    description: "A luxurious 360-degree rotating French fine-dining restaurant.",
+    mainImage: "../assets/restaurant/venues/n_grill/main.png",
+    mainAlt: "Dining table at n.Grill overlooking Seoul at night",
+    info: [
+      { title: "Reservation Guide", text: "02)3455-9297/9298", note: "Reservations can be made by calling during business hours." },
+      { title: "Directions", text: "After presenting your reservation details at the N Seoul Tower 5th floor observatory ticket booth (information desk), take the elevator to the 7th floor of the Tower.", note: "Free observatory tickets are issued only to those who have made a reservation for N Grill." }
+    ],
+    gallery: ["../assets/restaurant/venues/n_grill/gallery.png"],
+    galleryAlt: "n.Grill dining room with panoramic night views of Seoul",
+    guide: [
+      { title: "Usage Precautions", lines: ["If you use 60% or more of the gift certificate's face value, you can receive the remaining balance in cash.", "For certificates of 10,000 won or less, the remaining balance can be refunded if 80% or more is used.", "Gift certificates cannot be exchanged for cash.", "Discount systems are subject to change depending on the affiliate's circumstances."] },
+      { title: "Available Gift Certificates Guide", lines: ["CJ Gift Card", "National Tourism Gift Certificate"], image: "../assets/restaurant/venues/n_grill/gift_cards.png" }
+    ],
+    menus: [
+      ["Sea Bass Steak With Beurre Monte", "A delicate sea bass steak served with a rich and velvety beurre monté butter sauce.", "200.0 KBW", "menu_1.png"],
+      ["Korean beef sirloin steak", "A tender Korean beef sirloin steak offering rich juices and exceptional texture.", "200.0 KBW", "menu_2.png"],
+      ["Lobster gruyere gratin", "A delectable gratin featuring fresh lobster combined with savory Gruyere cheese.", "300.0 KBW", "menu_3.png"],
+      ["Charcoal-grilled lamb racks", "Tender lamb racks enhanced with a rich charcoal-grilled flavor.", "200.0 KBW", "menu_4.png"]
+    ],
+    assetPath: "n_grill",
+    wordmark: "../assets/restaurant/venues/n_grill/wordmark.png"
+  },
+  hancook: {
+    tabIndex: 2,
+    floor: "T3 Floor",
+    hours: "10:00 ~ 21:00",
+    title: "HANCOOK KOREAN GRILL & DINE",
+    description: "A modern Hanwoo grill dining experience with full flavors, enjoyed at Namsan 400M above sea level.",
+    mainImage: "../assets/restaurant/venues/hancook/main.png",
+    mainAlt: "HANCOOK Korean dining table overlooking Seoul",
+    info: [
+      { title: "Reservation Guide", text: "02)3455-9291/9292" },
+      { title: "Directions", text: "After getting off the elevator at the Observatory (5th floor/T5), move down 2 floors using the internal observatory stairs (3rd floor/T3).", note: "Free observatory tickets can be issued only for HANCOOK reservation customers." }
+    ],
+    gallery: ["../assets/restaurant/venues/hancook/gallery.png"],
+    galleryAlt: "Warmly lit interior of HANCOOK Korean Grill and Dine",
+    guide: [{ title: "Discount Cards", intro: "HANCOOK N SEOUL TOWER Partnership · Discount & Gift card Guide", lines: ["The CJ card 20% Discount + 2% Rewards", "CJ KB Kookmin Card", "CJ SC BC Card", "CJ Samsung Card", "CJ Citibank Card", "CJ Hyundai Card", "CJ Lotte Card", "CJ Shinhan Card", "CJ Hana SK Card"], image: "../assets/restaurant/venues/hancook/gift_cards.png" }],
+    menus: [
+      ["Charcoal-grilled Korean Beef & Soybean Paste Jjigae", "A set meal featuring juicy charcoal-grilled Korean beef served with soybean paste jjigae.", "65.0 KBW", "menu_1.png"],
+      ["Charcoal-grilled Korean Beef & Cold Buckwheat Noodles", "A set meal featuring juicy charcoal-grilled Korean beef served with cold buckwheat noodles.", "65.0 KBW", "menu_2.png"],
+      ["Short Rib Pattie with Abalone & Soybean Paste Jjigae", "A set meal featuring short rib patties made with minced beef and abalone.", "63.0 KBW", "menu_3.png"],
+      ["Grilled Bulgogi Bibimbap", "A bibimbap set meal featuring crispy grilled bulgogi toppings.", "50.0 KBW", "menu_4.png"]
+    ],
+    assetPath: "hancook",
+    wordmark: "../assets/restaurant/venues/hancook/wordmark.png"
+  },
+  the_place: {
+    tabIndex: 3,
+    floor: "T3 Floor",
+    hours: "10:00 ~ 23:00",
+    title: "The Place Dining",
+    description: "A casual Italian restaurant full of youth and romance.",
+    mainImage: "../assets/restaurant/venues/the_place/main.png",
+    mainAlt: "Italian dining table at The Place Dining overlooking Seoul",
+    info: [
+      { title: "Reservation Guide", text: "02) 3455-9220" },
+      { title: "Directions", text: "Use the N Seoul Tower roof terrace stairs · Tower 2F" },
+      { title: "Available Gift Certificates", text: "Shinsegae Gift Certificate / CJ Gift Certificate / Lotte Gift Certificate / Samsung Gift Certificate" }
+    ],
+    gallery: ["../assets/restaurant/venues/the_place/gallery.png"],
+    galleryAlt: "Daytime interior of The Place Dining with city views",
+    guide: [{ title: "Usage Precautions", lines: ["Paper gift certificates (mobile exchange vouchers cannot be used), CJ gift cards can be used.", "Gift certificates with expired validity cannot have their period extended or be used.", "Gift certificates are securities and cannot be canceled or refunded upon on-site payment.", "If you use 60% or more of the gift certificate's face value, you can receive the remaining balance in cash.", "For certificates of 10,000 won or less, the remaining balance can be refunded if 80% or more is used.", "Gift certificates cannot be exchanged for cash."], image: "../assets/restaurant/venues/the_place/gift_cards.png" }],
+    menus: [
+      ["Fresh Margherita", "Margherita pizza topped with fior di latte cheese, basil, and tomato sauce.", "26.0 KBW", "menu_1.png"],
+      ["Scallop Olio", "Oil-based pasta topped with scallop and shrimp.", "29.0 KBW", "menu_2.png"],
+      ["Rucola Salad", "Salad tossed with arugula, Granapadano cheese, and white vinegar dressing.", "18.0 KBW", "menu_3.png"],
+      ["Calamari & Gamberi Fritto", "Italian-style fritto of crispy cornmeal-fried shrimp and cuttlefish.", "24.0 KBW", "menu_4.png"]
+    ],
+    assetPath: "the_place",
+    wordmark: "../assets/restaurant/venues/the_place/wordmark.png"
+  },
+  durumi: {
+    tabIndex: 4,
+    floor: "T1 Floor",
+    hours: "10:00 ~ 21:00",
+    title: "Durumi Bunsik",
+    description: "A KOREAN DINER where you can enjoy all kinds of delicious Korean street food.",
+    mainImage: "../assets/restaurant/venues/durumi/main.png",
+    mainAlt: "Kimbap, ramyun and tteokbokki served at Durumi Bunsik",
+    info: [{ title: "Inquiry", text: "02) 318-4146" }, { title: "Directions", text: "N Seoul Tower Tower 1F" }],
+    gallery: ["../assets/restaurant/venues/durumi/gallery.png"],
+    galleryAlt: "Bright interior of Durumi Bunsik overlooking Seoul",
+    menus: [
+      ["NamSan Kimbap", "A nutritious classic Kimbap packed generously with fresh ingredients.", "7.5 KBW", "menu_1.png"],
+      ["Original Rice Tteokbokki", "Chewy whole-rice-cake tteokbokki tossed in a signature spicy sauce.", "8.0 KBW", "menu_2.png"],
+      ["Sweet & Soy Dakgangjeong", "Crispy fried chicken glazed in a delicious sweet and spicy sauce.", "14.5 KBW", "menu_3.png"],
+      ["Egg Ramyun", "Korea's ultimate soul food ramen cooked to a hearty and savory perfection.", "7.5 KBW", "menu_4.png"]
+    ],
+    assetPath: "durumi"
+  },
+  n_terrace: {
+    tabIndex: 5,
+    floor: "T1 Floor",
+    hours: "11:00 ~ 20:00",
+    title: "N Terrace",
+    description: "The highest terrace cafe & bar in Seoul.",
+    mainImage: "../assets/restaurant/venues/n_terrace/main.png",
+    mainAlt: "Exterior of N Terrace at sunset",
+    info: [{ title: "Inquiry", text: "02) 318-4146" }, { title: "Directions", text: "N Seoul Tower Tower 1F" }],
+    gallery: ["../assets/restaurant/venues/n_terrace/gallery_1.png", "../assets/restaurant/venues/n_terrace/gallery_2.png"],
+    galleryAlt: "Outdoor seating and cafe exterior at N Terrace",
+    seal: "../assets/restaurant/venues/n_terrace/seal.png",
+    wordmark: "../assets/restaurant/venues/n_terrace/wordmark.png"
+  },
+  n_sweet_bar: {
+    tabIndex: 6,
+    floor: "T5 Floor",
+    hours: "10:00 ~ 21:00",
+    title: "N Sweet Bar",
+    description: "A place where sweetness fills your mouth.",
+    mainImage: "../assets/restaurant/venues/n_sweet_bar/main.png",
+    mainAlt: "Colorful candy display at N Sweet Bar",
+    info: [{ title: "Directions", text: "N Seoul Tower 5F" }],
+    gallery: ["../assets/restaurant/venues/n_sweet_bar/gallery_1.png", "../assets/restaurant/venues/n_sweet_bar/gallery_2.png"],
+    galleryAlt: "Snacks and interior of N Sweet Bar",
+    seal: "../assets/restaurant/venues/n_sweet_bar/seal.png",
+    wordmark: "../assets/restaurant/venues/n_sweet_bar/wordmark.png"
+  }
+};
+
+function escapeRestaurantText(value) {
+  return String(value).replace(/[&<>"]/g, function replaceCharacter(character) {
+    return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[character];
+  });
+}
+
+function renderRestaurantVenue(key) {
+  var panel = document.querySelector("[data-restaurant-venue-panel]");
+  var burgerPanel = document.querySelector("[data-restaurant-burger-panel]");
+  var venue = RESTAURANT_VENUES[key];
+
+  if (!panel || !burgerPanel || !venue) {
+    return;
+  }
+
+  var infoMarkup = venue.info.map(function renderInfo(item) {
+    return '<article class="venue_info_box"><h3>' + escapeRestaurantText(item.title) + '</h3><p>' + escapeRestaurantText(item.text) + '</p>' + (item.note ? '<p class="venue_info_note">※ ' + escapeRestaurantText(item.note) + '</p>' : '') + '</article>';
+  }).join("");
+  var galleryMarkup = venue.gallery.map(function renderGallery(image, index) {
+    return '<figure class="venue_gallery_item"><img src="' + image + '" alt="' + escapeRestaurantText(venue.galleryAlt + (venue.gallery.length > 1 ? " " + (index + 1) : "")) + '" width="1600" height="568" loading="lazy"></figure>';
+  }).join("");
+  var guideMarkup = (venue.guide || []).map(function renderGuide(card) {
+    var list = card.lines.map(function renderLine(line, index) { return '<li><span>' + (index + 1) + '.</span> ' + escapeRestaurantText(line) + '</li>'; }).join("");
+    return '<article class="venue_guide_card"><div><h3>' + escapeRestaurantText(card.title) + '</h3>' + (card.intro ? '<p class="venue_guide_intro">' + escapeRestaurantText(card.intro) + '</p>' : '') + '<ol>' + list + '</ol></div>' + (card.image ? '<img src="' + card.image + '" alt="Gift certificates accepted at ' + escapeRestaurantText(venue.title) + '" width="765" height="319" loading="lazy">' : '') + '</article>';
+  }).join("");
+  var menuMarkup = (venue.menus || []).map(function renderMenu(menu, index) {
+    return '<article class="venue_menu_card"><figure><img src="../assets/restaurant/venues/' + venue.assetPath + '/' + menu[3] + '" alt="' + escapeRestaurantText(menu[0]) + '" width="700" height="700" loading="lazy"></figure><h3><span>' + (index + 1) + '</span>' + escapeRestaurantText(menu[0]) + '</h3><p>' + escapeRestaurantText(menu[1]) + '</p><strong>' + escapeRestaurantText(menu[2]) + '</strong></article>';
+  }).join("");
+
+  panel.innerHTML = '<section class="venue_content venue_content_' + key + '" aria-labelledby="venue_title"><div class="page_container">' +
+    '<div class="venue_intro"><figure class="venue_main_image"><img src="' + venue.mainImage + '" alt="' + escapeRestaurantText(venue.mainAlt) + '" width="637" height="689"></figure>' +
+    '<div class="venue_intro_body"><p class="venue_meta"><span>' + escapeRestaurantText(venue.floor) + '</span><i aria-hidden="true">|</i><span>' + escapeRestaurantText(venue.hours) + '</span></p><h2 id="venue_title">' + escapeRestaurantText(venue.title) + '</h2><p class="venue_description">' + escapeRestaurantText(venue.description) + '</p><div class="venue_info_grid">' + infoMarkup + '</div><button class="venue_reserve_button" type="button" disabled>Go to Reservation App</button></div></div>' +
+    '<div class="venue_gallery ' + (venue.gallery.length > 1 ? 'venue_gallery_split' : '') + '">' + galleryMarkup + (venue.seal ? '<img class="venue_gallery_seal" src="' + venue.seal + '" alt="" width="122" height="121" loading="lazy">' : '') + '</div>' +
+    (guideMarkup ? '<section class="venue_guide" aria-labelledby="venue_guide_title"><h2 id="venue_guide_title">Visit Guide</h2><div class="venue_guide_grid">' + guideMarkup + '</div></section>' : '') +
+    (menuMarkup ? '<section class="venue_best" aria-labelledby="venue_best_title"><div class="venue_section_heading"><h2 id="venue_best_title">Best Menu</h2><p>* Representative image. Actual presentation may vary.</p></div><div class="venue_menu_grid">' + menuMarkup + '</div></section>' : '<p class="venue_gallery_note">* Representative image. Actual presentation may vary.</p>') +
+    (venue.wordmark ? '<img class="venue_wordmark" src="' + venue.wordmark + '" alt="" aria-hidden="true" loading="lazy">' : '') +
+    '</div></section>';
+
+  burgerPanel.hidden = true;
+  panel.hidden = false;
+}
+
+function initRestaurantVenueTabs() {
+  var tabs = Array.prototype.slice.call(document.querySelectorAll(".subpage_tabs .subpage_tab"));
+  var panel = document.querySelector("[data-restaurant-venue-panel]");
+  var burgerPanel = document.querySelector("[data-restaurant-burger-panel]");
+  var venueKeys = ["n_burger", "n_grill", "hancook", "the_place", "durumi", "n_terrace", "n_sweet_bar"];
+
+  if (!tabs.length || !panel || !burgerPanel) {
+    return;
+  }
+
+  function activateTab(index, shouldUpdateHistory) {
+    var key = venueKeys[index];
+
+    tabs.forEach(function renderTabState(tab, tabIndex) {
+      var isActive = tabIndex === index;
+      tab.classList.toggle("is_active", isActive);
+      if (isActive) {
+        tab.setAttribute("aria-current", "page");
+      } else {
+        tab.removeAttribute("aria-current");
+      }
+    });
+
+    if (key === "n_burger") {
+      panel.hidden = true;
+      panel.innerHTML = "";
+      burgerPanel.hidden = false;
+    } else {
+      renderRestaurantVenue(key);
+    }
+
+    if (shouldUpdateHistory) {
+      window.history.replaceState({ restaurant: key }, "", "#" + key.replace(/_/g, "-"));
+    }
+
+    if (window.ScrollTrigger) {
+      window.ScrollTrigger.refresh();
+    }
+  }
+
+  tabs.forEach(function bindRestaurantTab(tab, index) {
+    tab.removeAttribute("data-pending-link");
+    tab.removeAttribute("aria-disabled");
+    tab.addEventListener("click", function handleRestaurantTabClick(event) {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      activateTab(index, true);
+    }, true);
+  });
+
+  var hashKey = window.location.hash.slice(1).replace(/-/g, "_");
+  var initialIndex = venueKeys.indexOf(hashKey);
+  activateTab(initialIndex >= 0 ? initialIndex : 0, false);
+}
+
 /* ========================================================================== 
    Restaurant > N Burger page interactions
    ========================================================================== */
 
 function initRestaurantScrollAnimations() {
   var isReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  initRestaurantVenueTabs();
 
   initBurgerGallerySlider(isReducedMotion);
   initBurgerBestSwiper(isReducedMotion);
