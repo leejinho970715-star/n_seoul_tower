@@ -132,6 +132,84 @@ function escapeRestaurantText(value) {
   });
 }
 
+var restaurantVenueGsapContext = null;
+
+function destroyRestaurantVenueAnimation() {
+  if (!restaurantVenueGsapContext) {
+    return;
+  }
+
+  restaurantVenueGsapContext.revert();
+  restaurantVenueGsapContext = null;
+}
+
+function initRestaurantVenueAnimation(panel) {
+  var gsap = window.gsap;
+  var ScrollTrigger = window.ScrollTrigger;
+  var isReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  destroyRestaurantVenueAnimation();
+
+  if (!panel || isReducedMotion || !gsap || !ScrollTrigger) {
+    return;
+  }
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  restaurantVenueGsapContext = gsap.context(function createVenueAnimations() {
+    function reveal(targets, trigger, options) {
+      var elements = gsap.utils.toArray(targets);
+
+      if (!elements.length || !trigger) {
+        return;
+      }
+
+      var settings = options || {};
+
+      gsap.from(elements, {
+        autoAlpha: 0,
+        x: settings.x || 0,
+        y: settings.y || 0,
+        scale: settings.scale || 1,
+        duration: settings.duration || 0.85,
+        stagger: settings.stagger || 0,
+        ease: "power3.out",
+        clearProps: "transform,opacity,visibility",
+        scrollTrigger: {
+          trigger: trigger,
+          start: settings.start || "top 82%",
+          once: true
+        }
+      });
+    }
+
+    var intro = panel.querySelector(".venue_intro");
+    var gallery = panel.querySelector(".venue_gallery");
+    var guide = panel.querySelector(".venue_guide");
+    var bestMenu = panel.querySelector(".venue_best");
+    var wordmark = panel.querySelector(".venue_wordmark");
+
+    reveal(panel.querySelectorAll(".venue_main_image"), intro, { x: -64 });
+    reveal(panel.querySelectorAll(".venue_intro_body > *"), intro, { x: 64, stagger: 0.09 });
+    reveal(panel.querySelectorAll(".venue_gallery_item"), gallery, { y: 56, scale: 0.985, stagger: 0.12 });
+    reveal(panel.querySelectorAll(".venue_gallery_seal"), gallery, { scale: 0.7, duration: 0.65, start: "top 76%" });
+    reveal(panel.querySelectorAll(".venue_guide > h2, .venue_guide_card"), guide, { y: 48, stagger: 0.1 });
+    reveal(panel.querySelectorAll(".venue_section_heading > *"), bestMenu, { y: 40, stagger: 0.08 });
+    reveal(panel.querySelectorAll(".venue_menu_card"), bestMenu, { y: 64, stagger: 0.1, start: "top 86%" });
+    reveal(wordmark ? [wordmark] : [], wordmark, { x: 64, duration: 1 });
+  }, panel);
+
+  Array.prototype.forEach.call(panel.querySelectorAll("img"), function refreshAfterVenueImage(image) {
+    if (!image.complete) {
+      image.addEventListener("load", function handleVenueImageLoad() {
+        ScrollTrigger.refresh();
+      }, { once: true });
+    }
+  });
+
+  ScrollTrigger.refresh();
+}
+
 function renderRestaurantVenue(key) {
   var panel = document.querySelector("[data-restaurant-venue-panel]");
   var burgerPanel = document.querySelector("[data-restaurant-burger-panel]");
@@ -140,6 +218,8 @@ function renderRestaurantVenue(key) {
   if (!panel || !burgerPanel || !venue) {
     return;
   }
+
+  destroyRestaurantVenueAnimation();
 
   var infoMarkup = venue.info.map(function renderInfo(item) {
     return '<article class="venue_info_box"><h3>' + escapeRestaurantText(item.title) + '</h3><p>' + escapeRestaurantText(item.text) + '</p>' + (item.note ? '<p class="venue_info_note">※ ' + escapeRestaurantText(item.note) + '</p>' : '') + '</article>';
@@ -166,6 +246,7 @@ function renderRestaurantVenue(key) {
 
   burgerPanel.hidden = true;
   panel.hidden = false;
+  initRestaurantVenueAnimation(panel);
 }
 
 function initRestaurantVenueTabs() {
@@ -192,6 +273,7 @@ function initRestaurantVenueTabs() {
     });
 
     if (key === "n_burger") {
+      destroyRestaurantVenueAnimation();
       panel.hidden = true;
       panel.innerHTML = "";
       burgerPanel.hidden = false;
