@@ -59,6 +59,7 @@ function initHistoryBearJourney() {
   var timelineHeight = 0;
   var lastFrameTime = null;
   var historyPathLength = 0;
+  var isMobileHistoryLayout = false;
   /* Lenis처럼 현재 스크롤 위치를 길게 따라가는 지연 효과입니다. */
   var FOLLOW_STRENGTH = 0.55;
 
@@ -68,13 +69,16 @@ function initHistoryBearJourney() {
 
   function updateBearStops() {
     var timelineRect = timeline.getBoundingClientRect();
+    isMobileHistoryLayout = window.innerWidth < 834;
     timelineStart = window.scrollY + timelineRect.top;
     timelineHeight = timelineRect.height;
     bearStops = cards.map(function getCardEntryPoint(card) {
       var cardRect = card.getBoundingClientRect();
       var cardEntryInset = Math.min(48, Math.max(24, cardRect.width * 0.12));
       return {
-        x: cardRect.right - timelineRect.left - cardEntryInset,
+        x: isMobileHistoryLayout
+          ? timelineRect.width / 2
+          : cardRect.right - timelineRect.left - cardEntryInset,
         y: cardRect.top - timelineRect.top + cardRect.height / 2
       };
     });
@@ -92,6 +96,14 @@ function initHistoryBearJourney() {
 
       var previousStop = bearStops[index - 1];
       var verticalDistance = stop.y - previousStop.y;
+      if (isMobileHistoryLayout) {
+        pathCommands.push(
+          "C " + previousStop.x.toFixed(2) + " " + (previousStop.y + verticalDistance * 0.36).toFixed(2) +
+          " " + stop.x.toFixed(2) + " " + (stop.y - verticalDistance * 0.36).toFixed(2) +
+          " " + stop.x.toFixed(2) + " " + stop.y.toFixed(2)
+        );
+        return;
+      }
       var curveOffset = Math.min(76, Math.abs(verticalDistance) * 0.38);
       var curveDirection = index % 2 === 0 ? 1 : -1;
       var controlOneX = previousStop.x + curveOffset * curveDirection;
