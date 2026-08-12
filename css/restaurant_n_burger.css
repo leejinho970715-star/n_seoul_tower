@@ -91,11 +91,16 @@
 }
 
 .venue_content_hancook .venue_main_image {
-  aspect-ratio: 629 / 744;
+  aspect-ratio: 4 / 5;
 }
 
 .venue_content_the_place .venue_main_image {
-  aspect-ratio: 637 / 599;
+  aspect-ratio: 1;
+}
+
+.venue_content_hancook .venue_main_image img,
+.venue_content_the_place .venue_main_image img {
+  object-fit: contain;
 }
 
 .venue_content_durumi .venue_main_image {
@@ -224,6 +229,11 @@
   object-fit: contain;
 }
 
+.venue_gallery_split .venue_gallery_seal {
+  /* 두 갤러리의 폭이 달라 컨테이너 50%가 아닌 실제 grid gap 중앙에 둡니다. */
+  left: calc((100% - 16px) * 0.4654 + 8px);
+}
+
 .venue_guide,
 .venue_best {
   margin-top: 56px;
@@ -276,9 +286,10 @@
 
 .venue_guide_card img {
   width: 100%;
-  max-height: 240px;
+  height: auto;
+  max-height: none;
   border-radius: 10px;
-  object-fit: cover;
+  object-fit: contain;
 }
 
 .venue_section_heading {
@@ -387,6 +398,10 @@
     gap: 24px;
   }
 
+  .venue_gallery_split .venue_gallery_seal {
+    left: calc((100% - 24px) * 0.4654 + 12px);
+  }
+
   .venue_guide_grid:has(.venue_guide_card:nth-child(2)) {
     grid-template-columns: 1.35fr 1fr;
   }
@@ -405,6 +420,92 @@
   .venue_menu_grid {
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 24px;
+  }
+}
+
+@media (max-width: 833px) {
+  .venue_content {
+    overflow: clip;
+  }
+
+  .venue_intro,
+  .venue_gallery,
+  .venue_guide_grid,
+  .venue_menu_grid {
+    min-width: 0;
+  }
+
+  .venue_intro_body,
+  .venue_info_box,
+  .venue_guide_card,
+  .venue_menu_card {
+    min-width: 0;
+  }
+
+  .venue_meta {
+    font-size: clamp(18px, 5.6vw, 24px);
+  }
+
+  .venue_intro_body > h2 {
+    overflow-wrap: anywhere;
+  }
+
+  .venue_info_grid,
+  .venue_guide_grid,
+  .venue_menu_grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .venue_reserve_button {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .venue_gallery_split .venue_gallery_seal {
+    top: 50%;
+    left: 50%;
+  }
+
+  .venue_menu_card figure {
+    width: min(100%, 420px);
+    margin-inline: auto;
+  }
+
+  .venue_wordmark {
+    width: min(76%, 420px);
+    margin-top: 48px;
+  }
+}
+
+@media (min-width: 834px) and (max-width: 1279px) {
+  .venue_intro {
+    grid-template-columns: minmax(250px, 0.8fr) minmax(0, 1.2fr);
+    gap: 40px;
+    align-items: start;
+  }
+
+  .venue_intro_body,
+  .venue_info_box,
+  .venue_guide_card,
+  .venue_menu_card {
+    min-width: 0;
+  }
+
+  .venue_intro_body > h2 {
+    font-size: clamp(34px, 5vw, 44px);
+    overflow-wrap: anywhere;
+  }
+
+  .venue_description {
+    font-size: clamp(17px, 2.4vw, 21px);
+  }
+
+  .venue_guide_card:has(img) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .venue_menu_grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
